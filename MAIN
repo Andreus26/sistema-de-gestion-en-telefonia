@@ -1,0 +1,36 @@
+package telefonia;
+public class Main {
+public static void main(String[] args) {
+//CREAR UNA LINEA PREPAGO
+ LineaPrepago prepago = new LineaPrepago();
+//ASIGNAR LOS DATOS DE LA LINEA PREPAGO
+prepago.setNumero("3001606184");
+prepago.setPropietario("Andres beltran");
+prepago.setMinutosConsumidos(0);
+prepago.setSaldo(100000);
+//RECARGAR SALDO
+System.out.println("===== LINEA PREPAGO =====");
+prepago.recargarSaldo(5000);
+//REALIZAR UNA LLAMADA
+prepago.realizarLlamada(20);
+//MOSTRAR LOS DATOS DE LA LINEA PREPAGO
+System.out.println("\nDATOS DE LA LINEA PREPAGO");
+prepago.mostrarDatos();
+//CREAR UNA LINEA POSTPAGO
+LineaPostpago postpago = new LineaPostpago();
+//ASIGNAR LOS DATOS DE LA LINEA POSTPAGO
+postpago.setNumero("3107654321");
+postpago.setPropietario("Laura Martinez");
+postpago.setMinutosConsumidos(0);
+postpago.setSaldo(0);
+postpago.setLimiteCredito(50000);
+postpago.setCargoFijoMensual(8000);
+//REALIZAR LLAMADAS
+System.out.println("\n===== LINEA POSTPAGO =====");
+postpago.realizarLlamada(100);
+postpago.realizarLlamada(50);
+//MOSTRAR LA FACTURA MENSUAL
+System.out.println("\nFACTURA DE LA LINEA POSTPAGO");
+postpago.mostrarFactura();
+}
+}
