@@ -1,0 +1,89 @@
+package telefonia;
+import java.util.Scanner; //TECLADO
+public class LineaTelefonica {
+
+//CONSTANTE CON EL VALOR DE CADA MINUTO
+public static final double TARIFA_MINUTO=150.0;
+//ATRIBUTOS PRIVADOS:
+private String numero;
+private String propietario;
+private double minutosConsumidos;
+private double saldo;
+
+//CONSTRUCTOR VACIO
+public LineaTelefonica(){
+this.numero = "";
+this.propietario = "";
+this.minutosConsumidos = 0;
+this.saldo = 0;       
+}
+//CONSTRUCTOR CON PARAMETROS
+public LineaTelefonica(String numero, String propietario, double minutosConsumidos, double saldo){
+this();
+setNumero(numero);
+setPropietario(propietario);
+setMinutosConsumidos(minutosConsumidos);
+setSaldo(saldo);
+}
+//Metodo set
+public void setNumero(String numero){
+if (numero  != null && !numero.trim().isEmpty()) {
+this.numero = numero;
+} else {
+System.out.println("Error: número inválido.");
+}   
+}
+public void setPropietario(String propietario) {
+if (propietario != null && !propietario.trim().isEmpty()) {
+this.propietario = propietario;
+} else {
+ System.out.println("Error: propietario inválido.");
+}
+}
+//METODO SET PARA LOS MINUTOS CONSUMIDOS
+public void setMinutosConsumidos(double minutosConsumidos) {
+if (minutosConsumidos >= 0) {
+this.minutosConsumidos = minutosConsumidos;
+} else {
+System.out.println("Error: los minutos no pueden ser negativos.");
+}
+}
+//METODO SET PARA EL SALDO
+public void setSaldo(double saldo) {
+if (saldo >= 0) {
+this.saldo = saldo;
+} else {
+System.out.println("Error: el saldo no puede ser negativo.");
+}
+}
+//METODO GET PARA CONSULTAR EL NUMERO
+public String getNumero() {
+return numero;
+}
+//METODO GET PARA CONSULTAR EL PROPIETARIO
+public String getPropietario() {
+return propietario;
+}
+//METODO GET PARA CONSULTAR LOS MINUTOS CONSUMIDOS
+public double getMinutosConsumidos() {
+return minutosConsumidos;
+}
+//METODO GET PARA CONSULTAR EL SALDO
+public double getSaldo() {
+return saldo;
+}
+    
+//METODO PARA CALCULAR EL COSTO DEL CONSUMO
+public double calcularCostoConsumo() {
+return minutosConsumidos * TARIFA_MINUTO;
+}
+//METODO PARA MOSTRAR LOS DATOS DE LA LINEA TELEFONICA
+public void mostrarDatos() {
+System.out.println("Numero telefonico: " + getNumero());
+System.out.println("Propietario: " + getPropietario());
+System.out.println("Minutos consumidos: " + getMinutosConsumidos());
+System.out.println("Costo del consumo: $" + calcularCostoConsumo() + " COP");
+System.out.println("Saldo disponible: $" + getSaldo() + " COP");
+ }
+}
+
