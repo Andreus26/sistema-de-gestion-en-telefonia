@@ -1,0 +1,42 @@
+//CLASE HIJA QUE HEREDA DE LINEATELEFONICA
+package telefonia;
+public class LineaPrepago extends LineaTelefonica {
+//CONSTRUCTOR VACIO
+public LineaPrepago() {
+  super();
+}
+//CONSTRUCTOR CON PARAMETROS
+public LineaPrepago(String numero, String propietario, double minutosConsumidos, double saldo) {
+super(numero, propietario, minutosConsumidos, saldo);
+}
+//METODO PARA RECARGAR SALDO
+public void recargarSaldo(double valor) {
+if (valor > 0) {
+setSaldo(getSaldo() + valor);
+System.out.println("Recarga realizada correctamente.");
+} else {
+System.out.println("Error: el valor de la recarga debe ser mayor que cero.");
+}
+}
+//METODO PARA REALIZAR UNA LLAMADA
+public void realizarLlamada(double minutos) {
+if (minutos <= 0) {
+System.out.println("Error: los minutos deben ser mayores que cero.");
+return;
+}
+//CALCULAR EL COSTO DE LA LLAMADA
+double costo = minutos * TARIFA_MINUTO;
+//VERIFICAR SI HAY SALDO SUFICIENTE
+if (costo <= getSaldo()) {
+//ACUMULAR LOS MINUTOS CONSUMIDOS
+setMinutosConsumidos(getMinutosConsumidos() + minutos);
+//DESCONTAR EL COSTO DE LA LLAMADA DEL SALDO
+setSaldo(getSaldo() - costo);
+System.out.println("Llamada realizada correctamente.");
+System.out.println("Costo de la llamada: $" + costo);
+} else {
+System.out.println("Error: no tiene saldo suficiente para realizar la llamada.");
+}
+}
+
+}   
