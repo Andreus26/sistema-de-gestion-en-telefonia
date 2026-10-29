@@ -1,89 +1,72 @@
 package telefonia;
-import java.util.Scanner; //TECLADO
+
+import java.util.ArrayList;
+
 public class LineaTelefonica {
+    private String numero;
+    private String propietario;
+    private double minutosConsumidos;
+    private double saldo;
 
-//CONSTANTE CON EL VALOR DE CADA MINUTO
-public static final double TARIFA_MINUTO=150.0;
-//ATRIBUTOS PRIVADOS:
-private String numero;
-private String propietario;
-private double minutosConsumidos;
-private double saldo;
+    // Lista estática central para evitar números duplicados en todo el sistema
+    private static ArrayList<String> numerosRegistrados = new ArrayList<>();
 
-//CONSTRUCTOR VACIO
-public LineaTelefonica(){
-this.numero = "";
-this.propietario = "";
-this.minutosConsumidos = 0;
-this.saldo = 0;       
-}
-//CONSTRUCTOR CON PARAMETROS
-public LineaTelefonica(String numero, String propietario, double minutosConsumidos, double saldo){
-this();
-setNumero(numero);
-setPropietario(propietario);
-setMinutosConsumidos(minutosConsumidos);
-setSaldo(saldo);
-}
-//Metodo set
-public void setNumero(String numero){
-if (numero  != null && !numero.trim().isEmpty()) {
-this.numero = numero;
-} else {
-System.out.println("Error: número inválido.");
-}   
-}
-public void setPropietario(String propietario) {
-if (propietario != null && !propietario.trim().isEmpty()) {
-this.propietario = propietario;
-} else {
- System.out.println("Error: propietario inválido.");
-}
-}
-//METODO SET PARA LOS MINUTOS CONSUMIDOS
-public void setMinutosConsumidos(double minutosConsumidos) {
-if (minutosConsumidos >= 0) {
-this.minutosConsumidos = minutosConsumidos;
-} else {
-System.out.println("Error: los minutos no pueden ser negativos.");
-}
-}
-//METODO SET PARA EL SALDO
-public void setSaldo(double saldo) {
-if (saldo >= 0) {
-this.saldo = saldo;
-} else {
-System.out.println("Error: el saldo no puede ser negativo.");
-}
-}
-//METODO GET PARA CONSULTAR EL NUMERO
-public String getNumero() {
-return numero;
-}
-//METODO GET PARA CONSULTAR EL PROPIETARIO
-public String getPropietario() {
-return propietario;
-}
-//METODO GET PARA CONSULTAR LOS MINUTOS CONSUMIDOS
-public double getMinutosConsumidos() {
-return minutosConsumidos;
-}
-//METODO GET PARA CONSULTAR EL SALDO
-public double getSaldo() {
-return saldo;
-}
-    
-//METODO PARA CALCULAR EL COSTO DEL CONSUMO
-public double calcularCostoConsumo() {
-return minutosConsumidos * TARIFA_MINUTO;
-}
-//METODO PARA MOSTRAR LOS DATOS DE LA LINEA TELEFONICA
-public void mostrarDatos() {
-System.out.println("Numero telefonico: " + getNumero());
-System.out.println("Propietario: " + getPropietario());
-System.out.println("Minutos consumidos: " + getMinutosConsumidos());
-System.out.println("Costo del consumo: $" + calcularCostoConsumo() + " COP");
-System.out.println("Saldo disponible: $" + getSaldo() + " COP");
- }
-}
+    public static final double TARIFA_MINUTO = 150.0;
 
+    // Constructor vacío
+    public LineaTelefonica() {
+        this.numero = "";
+        this.propietario = "";
+        this.minutosConsumidos = 0.0;
+        this.saldo = 0.0;
+    }
+
+    // Getters y Setters
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        if (numero == null || numero.trim().isEmpty()) {
+            System.out.println("Error: El numero no puede estar vacio.");
+        } else if (numerosRegistrados.contains(numero)) {
+            System.out.println("ERROR: El numero " + numero + " ya esta registrado en el sistema.");
+        } else {
+            this.numero = numero;
+            numerosRegistrados.add(numero);
+            System.out.println("Numero " + numero + " registrado exitosamente.");
+        }
+    }
+
+    public String getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(String propietario) {
+        this.propietario = propietario;
+    }
+
+    public double getMinutosConsumidos() {
+        return minutosConsumidos;
+    }
+
+    public void setMinutosConsumidos(double minutosConsumidos) {
+        if (minutosConsumidos < 0) {
+            System.out.println("Error: Los minutos consumidos no pueden ser negativos.");
+        } else {
+            this.minutosConsumidos = minutosConsumidos;
+        }
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        if (saldo < 0) {
+            System.out.println("Error: El saldo no puede ser negativo.");
+        } else {
+            this.saldo = saldo;
+        }
+    }
+}
