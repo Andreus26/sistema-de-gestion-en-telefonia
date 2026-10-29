@@ -1,81 +1,69 @@
 package telefonia;
-//CLASE HIJA QUE HEREDA DE LINEATELEFONICA
+
 public class LineaPostpago extends LineaTelefonica {
+    private double limiteCredito;
+    private double cargoFijoMensual;
 
-//ATRIBUTOS PRIVADOS
-private double limiteCredito;
-private double cargoFijoMensual;
+    public LineaPostpago() {
+        super();
+        this.limiteCredito = 0.0;
+        this.cargoFijoMensual = 0.0;
+    }
 
-//CONSTRUCTOR VACIO
-public LineaPostpago() {
-super();
-this.limiteCredito = 0;
-this.cargoFijoMensual = 0;
-}
+    public double getLimiteCredito() {
+        return limiteCredito;
+    }
 
-//CONSTRUCTOR CON PARAMETROS
-public LineaPostpago(String numero, String propietario, double minutosConsumidos, double saldo, double limiteCredito, double cargoFijoMensual) {
-super(numero, propietario, minutosConsumidos, saldo);
-setLimiteCredito(limiteCredito);
-setCargoFijoMensual(cargoFijoMensual);
-}
+    public void setLimiteCredito(double limiteCredito) {
+        if (limiteCredito < 0) {
+            System.out.println("Error: El limite de credito no puede ser negativo.");
+        } else {
+            this.limiteCredito = limiteCredito;
+        }
+    }
 
-//METODO SET PARA EL LIMITE DE CREDITO
-public void setLimiteCredito(double limiteCredito) {
-if (limiteCredito >= 0) {
-this.limiteCredito = limiteCredito;
-} else {
-System.out.println("Error: el limite de credito no puede ser negativo.");
-}
-}
+    public double getCargoFijoMensual() {
+        return cargoFijoMensual;
+    }
 
-//METODO GET PARA CONSULTAR EL LIMITE DE CREDITO
-public double getLimiteCredito() {
-return limiteCredito;
-}
+    public void setCargoFijoMensual(double cargoFijoMensual) {
+        if (cargoFijoMensual < 0) {
+            System.out.println("Error: El cargo fijo mensual no puede ser negativo.");
+        } else {
+            this.cargoFijoMensual = cargoFijoMensual;
+        }
+    }
 
-//METODO SET PARA EL CARGO FIJO MENSUAL
-public void setCargoFijoMensual(double cargoFijoMensual) {
-if (cargoFijoMensual >= 0) {
-this.cargoFijoMensual = cargoFijoMensual;
-} else {
-System.out.println("Error: el cargo fijo no puede ser negativo.");
-}
-}
+    public void realizarLlamada(double minutos) {
+        if (minutos <= 0) {
+            System.out.println("Error: Los minutos de la llamada deben ser mayores a cero.");
+            return;
+        }
 
-//METODO GET PARA CONSULTAR EL CARGO FIJO
-public double getCargoFijoMensual() {
-return cargoFijoMensual;
-}
-//METODO PARA REALIZAR UNA LLAMADA
-public void realizarLlamada(double minutos) {
-if (minutos <= 0) {
-System.out.println("Error: los minutos deben ser mayores que cero.");
-return;
-}
-//CALCULAR LOS MINUTOS TOTALES
-double minutosTotales = getMinutosConsumidos() + minutos;
-//CALCULAR EL COSTO TOTAL DEL CONSUMO
-double costoTotal = minutosTotales * TARIFA_MINUTO;
-//VERIFICAR SI NO SE SUPERA EL LIMITE DE CREDITO
-if (costoTotal <= getLimiteCredito()) {
-setMinutosConsumidos(minutosTotales);
-System.out.println("Llamada realizada correctamente.");
-System.out.println("Costo acumulado de llamadas: $" + costoTotal + " COP");
-} else {
-System.out.println("Error: la llamada supera el limite de credito.");
-}
-}
-//METODO PARA CALCULAR LA FACTURA MENSUAL
-public double calcularFacturaMensual() {
-return calcularCostoConsumo() + cargoFijoMensual;
-}
-//METODO PARA MOSTRAR LA FACTURA
-public void mostrarFactura() {
-mostrarDatos();
-System.out.println("Limite de credito: $" + getLimiteCredito() + " COP");
-System.out.println("Cargo fijo mensual: $" + getCargoFijoMensual() + " COP");
-System.out.println("Total de la factura: $" + calcularFacturaMensual() + " COP");
-}
+        double costoLlamada = minutos * TARIFA_MINUTO;
+        double costoAcumuladoActual = getMinutosConsumidos() * TARIFA_MINUTO;
 
+        // Validar que el consumo actual más la nueva llamada no superen el límite de crédito
+        if ((costoAcumuladoActual + costoLlamada) <= this.limiteCredito) {
+            setMinutosConsumidos(getMinutosConsumidos() + minutos);
+            System.out.println("Llamada realizada correctamente.");
+            System.out.println("Costo acumulado de llamadas: $" + (getMinutosConsumidos() * TARIFA_MINUTO) + " COP");
+        } else {
+            System.out.println("Error: La llamada excede el limite de credito permitido.");
+        }
+    }
+
+    public void mostrarFactura() {
+        double costoConsumo = getMinutosConsumidos() * TARIFA_MINUTO;
+        double totalFactura = costoConsumo + this.cargoFijoMensual;
+
+        System.out.println("Numero telefonico: " + getNumero());
+        System.out.println("Propietario: " + getPropietario());
+        System.out.println("Minutos consumidos: " + getMinutosConsumidos());
+        System.out.println("Costo del consumo: $" + costoConsumo + " COP");
+        System.out.println("Saldo disponible: $0.0 COP");
+        System.out.println("Limite de credito: $" + this.limiteCredito + " COP");
+        System.out.println("Cargo fijo mensual: $" + this.cargoFijoMensual + " COP");
+        System.out.println("Total de la factura: $" + totalFactura + " COP");
+    }
 }
