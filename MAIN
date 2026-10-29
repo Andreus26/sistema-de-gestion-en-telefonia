@@ -1,36 +1,62 @@
 package telefonia;
+
+import java.util.Scanner; // Importamos Scanner para leer el teclado
+
 public class Main {
 public static void main(String[] args) {
-//CREAR UNA LINEA PREPAGO
- LineaPrepago prepago = new LineaPrepago();
-//ASIGNAR LOS DATOS DE LA LINEA PREPAGO
-prepago.setNumero("3001606184");
-prepago.setPropietario("Andres beltran");
-prepago.setMinutosConsumidos(0);
-prepago.setSaldo(100000);
-//RECARGAR SALDO
-System.out.println("===== LINEA PREPAGO =====");
-prepago.recargarSaldo(5000);
-//REALIZAR UNA LLAMADA
-prepago.realizarLlamada(20);
-//MOSTRAR LOS DATOS DE LA LINEA PREPAGO
+// Crear el objeto Scanner para leer lo que el usuario escribe
+Scanner scanner = new Scanner(System.in);
+ // ==========================================
+ // 1. INTERACCIÓN CON LÍNEA PREPAGO
+ // ==========================================
+System.out.println("===== CONFIGURACIÓN LÍNEA PREPAGO =====");
+LineaPrepago prepago = new LineaPrepago();
+System.out.print("Ingrese el numero de telefono prepago: ");
+prepago.setNumero(scanner.nextLine());
+System.out.print("Ingrese el nombre del propietario: ");
+prepago.setPropietario(scanner.nextLine());
+ prepago.setMinutosConsumidos(0);
+System.out.print("Ingrese el saldo inicial (ej. 100000): ");
+prepago.setSaldo(scanner.nextDouble());
+System.out.print("Ingrese el valor a recargar: ");
+double recarga = scanner.nextDouble();
+prepago.recargarSaldo(recarga);
+System.out.print("Ingrese los minutos de la llamada a simular: ");
+double minutosLlamadaPrepago = scanner.nextDouble();
+System.out.println("\n--- Procesando llamada ---");
+prepago.realizarLlamada(minutosLlamadaPrepago);
 System.out.println("\nDATOS DE LA LINEA PREPAGO");
 prepago.mostrarDatos();
-//CREAR UNA LINEA POSTPAGO
+// Limpiamos el buffer del teclado antes de leer textos de nuevo
+ scanner.nextLine(); 
+ // ==========================================
+// 2. INTERACCIÓN CON LÍNEA POSTPAGO
+// ==========================================
+System.out.println("\n\n===== CONFIGURACIÓN LÍNEA POSTPAGO =====");
 LineaPostpago postpago = new LineaPostpago();
-//ASIGNAR LOS DATOS DE LA LINEA POSTPAGO
-postpago.setNumero("3107654321");
-postpago.setPropietario("Laura Martinez");
+System.out.print("Ingrese el numero de telefono postpago: ");
+postpago.setNumero(scanner.nextLine());
+System.out.print("Ingrese el nombre del propietario: ");
+postpago.setPropietario(scanner.nextLine());
 postpago.setMinutosConsumidos(0);
 postpago.setSaldo(0);
-postpago.setLimiteCredito(50000);
-postpago.setCargoFijoMensual(8000);
-//REALIZAR LLAMADAS
-System.out.println("\n===== LINEA POSTPAGO =====");
-postpago.realizarLlamada(100);
-postpago.realizarLlamada(50);
-//MOSTRAR LA FACTURA MENSUAL
+System.out.print("Ingrese el limite de credito permitido (ej. 50000): ");
+postpago.setLimiteCredito(scanner.nextDouble());
+System.out.print("Ingrese el cargo fijo mensual (ej. 8000): ");
+postpago.setCargoFijoMensual(scanner.nextDouble());
+System.out.print("Ingrese los minutos de la PRIMERA llamada a simular: ");
+double minutosLlamada1 = scanner.nextDouble();
+System.out.println("\n--- Procesando primera llamada ---");
+postpago.realizarLlamada(minutosLlamada1);
+        
+System.out.print("Ingrese los minutos de la SEGUNDA llamada a simular: ");
+double minutosLlamada2 = scanner.nextDouble();
+System.out.println("\n--- Procesando segunda llamada ---");
+postpago.realizarLlamada(minutosLlamada2);
+   
 System.out.println("\nFACTURA DE LA LINEA POSTPAGO");
 postpago.mostrarFactura();
-}
+ 
+// Cerramos el scanner por buenas prácticas
+ scanner.close(); }
 }
